@@ -78,6 +78,13 @@ class MultiTask_Module(Base_Module):
         images, targets, _ = batch
         outputs = self(images)
 
+        # Handle target formats (single tensor vs list) similar to test_step
+        active_tasks = [i for i in range(len(self.args.out_channels)) if self.args.out_channels[i] > 0]
+        num_active_tasks = len(active_tasks)
+        if num_active_tasks > 1 and not isinstance(targets, list):
+            print(f"Detected single target tensor with {num_active_tasks} active tasks. Replicating target for all tasks.")
+            targets = [targets for _ in range(len(self.args.out_channels))]
+
         # Initialize dictionaries to store task metrics and valid sample counts
         dsc_per_task = {}
         jac_per_task = {}

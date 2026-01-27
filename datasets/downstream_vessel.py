@@ -110,12 +110,12 @@ class Downstream_Vessel(Dataset):
     def load_name(self, split):
         inputs, targets, names = [], [], []
         dataset_name = getattr(self.args, 'dataset_name', self.args.dataset)
-        base_dir = '/workspace/wangzhonghua/fundus_dataset/fundus_miccai'
+        base_root = getattr(self.args, 'csv_base_dir', '/mnt/hdd/sdd/wangzh/datasets/retsam/')
 
         # CSV-driven splits for train/val/test
         if split in ['train', 'val', 'test']:
             csv_name = getattr(self.args, 'train_csv_name', 'train.csv') if split == 'train' else f'{split}.csv'
-            csv_path = os.path.join(base_dir, "vessel_seg", dataset_name, csv_name)
+            csv_path = os.path.join(base_root, dataset_name, csv_name)
             if not os.path.exists(csv_path):
                 raise FileNotFoundError(f'{split} CSV not found: {csv_path}')
 
@@ -133,9 +133,9 @@ class Downstream_Vessel(Dataset):
                 # Normalize paths: replace /datasets prefix with workspace location
                 old_prefix = '/datasets'
                 if image_path.startswith(old_prefix):
-                    image_path = image_path.replace(old_prefix, base_dir, 1)
+                    image_path = image_path.replace(old_prefix, base_root, 1)
                 if target_path.startswith(old_prefix):
-                    target_path = target_path.replace(old_prefix, base_dir, 1)
+                    target_path = target_path.replace(old_prefix, base_root, 1)
 
                 # Enforce dataset filter to avoid mixing other datasets (e.g., DRIVE) by accident
                 norm_image = os.path.normpath(image_path)

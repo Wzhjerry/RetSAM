@@ -1,11 +1,10 @@
 CUDA_VISIBLE_DEVICES=2 python3 inference.py \
-    --input_dir "/workspace/julie/datasets/fundus_datasets/datasets/REFUGE/Images_Square" \
-    --output_dir "/workspace/wangzhonghua/experiments/retsam_oculomics/refuge/quantitative_results" \
-    --model_path /root/checkpoints/retsam_v1_swapped_final_with_coord_av2.ckpt \
+    --input_dir "/mnt/hdd/sdd/wangzh/datasets/retsam/webshow" \
+    --output_dir "/mnt/hdd/sdd/wangzh/datasets/retsam/webshow_results_public" \
+    --model_path /mnt/hdd/sdd/wangzh/checkpoints/retsam/retsam_v1_for_public.ckpt \
     --multitask \
     --device cuda \
     --output_channels "(2,3,2,4,6)" \
     --has_coordinate_head \
     --num_coordinates 2 \
-    --enable_analysis \
-    --analysis_only
+    --enable_analysis

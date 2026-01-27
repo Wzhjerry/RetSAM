@@ -117,8 +117,8 @@ class Downstream_Lesion(Dataset):
 
     def load_name(self, split):
         inputs, ex_targets, he_targets, se_targets, ma_targets, names = [], [], [], [], [], []
-        base_dir = '/workspace/wangzhonghua/fundus_dataset/fundus_miccai/lesion_seg'
-        dataset_dir = os.path.join(base_dir, self.args.dataset_name)
+        base_root = getattr(self.args, "csv_base_dir", "/workspace/wangzhonghua/fundus_dataset/fundus_miccai")
+        dataset_dir = os.path.join(base_root, "lesion_seg", self.args.dataset_name)
         if split == 'train':
             csv_name = getattr(self.args, "train_csv_name", "train.csv")
         elif split == 'val':
@@ -138,11 +138,11 @@ class Downstream_Lesion(Dataset):
             se_path = str(row['label_SE_path'])
             name = str(row.get('image_name', analyze_name(img_path)))
 
-            img_path = img_path.replace('/datasets', '/workspace/wangzhonghua/fundus_dataset/fundus_miccai')
-            ex_path = ex_path.replace('/datasets', '/workspace/wangzhonghua/fundus_dataset/fundus_miccai')
-            he_path = he_path.replace('/datasets', '/workspace/wangzhonghua/fundus_dataset/fundus_miccai')
-            ma_path = ma_path.replace('/datasets', '/workspace/wangzhonghua/fundus_dataset/fundus_miccai')
-            se_path = se_path.replace('/datasets', '/workspace/wangzhonghua/fundus_dataset/fundus_miccai')
+            img_path = img_path.replace('/datasets', base_root)
+            ex_path = ex_path.replace('/datasets', base_root)
+            he_path = he_path.replace('/datasets', base_root)
+            ma_path = ma_path.replace('/datasets', base_root)
+            se_path = se_path.replace('/datasets', base_root)
 
             inputs.append(img_path)
             ex_targets.append(ex_path)

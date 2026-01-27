@@ -93,6 +93,11 @@ def main():
     parser.add_argument("--dataset", default="staining134", help="dataset name",)
     parser.add_argument("--dataset_name", default=None, help="explicit dataset folder name (if different from module name)")
     parser.add_argument("--train_csv_name", default="train.csv", help="CSV filename for training list")
+    parser.add_argument(
+        "--csv_base_dir",
+        default="/workspace/wangzhonghua/fundus_dataset/fundus_miccai",
+        help="base directory for CSV lists and dataset paths",
+    )
     parser.add_argument("--kfold", action="store_true", help="5-fold cross-validation")
     parser.add_argument("--debug", action="store_true", help="debug mode")
     parser.add_argument("--description", default="", type=str, help="description of the experiment")

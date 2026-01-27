@@ -85,15 +85,15 @@ class Downstream_Multitask(Dataset):
         label_ex_he[label_ex > 0] = 1
         label_ex_he[label_he > 0] = 2  # HE overrides if overlap
         # Debug masks
-        try:
-            dbg_dir = '/workspace/wangzhonghua/debug'
-            os.makedirs(dbg_dir, exist_ok=True)
-            base_name = os.path.splitext(os.path.basename(self.x[idx]))[0]
-            imageio.imwrite(os.path.join(dbg_dir, f"{base_name}_vessel.png"), label_vessel.astype(np.uint8) * 255)
-            imageio.imwrite(os.path.join(dbg_dir, f"{base_name}_odoc.png"), label_odoc.astype(np.uint8) * 127)
-            imageio.imwrite(os.path.join(dbg_dir, f"{base_name}_ex_he.png"), label_ex_he.astype(np.uint8) * 127)
-        except Exception as e:
-            print(f"=> Debug mask save failed for {self.x[idx]}: {e}")
+        # try:
+        #     dbg_dir = '/workspace/wangzhonghua/debug'
+        #     os.makedirs(dbg_dir, exist_ok=True)
+        #     base_name = os.path.splitext(os.path.basename(self.x[idx]))[0]
+        #     imageio.imwrite(os.path.join(dbg_dir, f"{base_name}_vessel.png"), label_vessel.astype(np.uint8) * 255)
+        #     imageio.imwrite(os.path.join(dbg_dir, f"{base_name}_odoc.png"), label_odoc.astype(np.uint8) * 127)
+        #     imageio.imwrite(os.path.join(dbg_dir, f"{base_name}_ex_he.png"), label_ex_he.astype(np.uint8) * 127)
+        # except Exception as e:
+        #     print(f"=> Debug mask save failed for {self.x[idx]}: {e}")
 
         name = self.names[idx]
 
@@ -138,13 +138,13 @@ class Downstream_Multitask(Dataset):
     def load_name(self, split):
         inputs, targets_vessel, targets_odoc, targets_ex, targets_he, names = [], [], [], [], [], []
         dataset_name = getattr(self.args, 'dataset_name', self.args.dataset)
-        base_dir = '/workspace/wangzhonghua/fundus_dataset/fundus_miccai'
+        base_root = getattr(self.args, 'csv_base_dir', '/workspace/wangzhonghua/fundus_dataset/fundus_miccai')
         # Use test list for both val/test; train uses train list
         if split == 'train':
             split_csv = 'train_relabel.csv'
         else:
             split_csv = 'test_relabel.csv'
-        csv_path = os.path.join(base_dir, 'lesion_seg', dataset_name, split_csv)
+        csv_path = os.path.join(base_root, 'lesion_seg', dataset_name, split_csv)
         if not os.path.exists(csv_path):
             raise FileNotFoundError(f'{split} CSV not found: {csv_path}')
 
@@ -169,15 +169,15 @@ class Downstream_Multitask(Dataset):
 
             # Normalize paths if needed
             if image_path.startswith(old_prefix):
-                image_path = image_path.replace(old_prefix, base_dir, 1)
+                image_path = image_path.replace(old_prefix, base_root, 1)
             if vessel_path.startswith(old_prefix):
-                vessel_path = vessel_path.replace(old_prefix, base_dir, 1)
+                vessel_path = vessel_path.replace(old_prefix, base_root, 1)
             if odoc_path.startswith(old_prefix):
-                odoc_path = odoc_path.replace(old_prefix, base_dir, 1)
+                odoc_path = odoc_path.replace(old_prefix, base_root, 1)
             if ex_path.startswith(old_prefix):
-                ex_path = ex_path.replace(old_prefix, base_dir, 1)
+                ex_path = ex_path.replace(old_prefix, base_root, 1)
             if he_path.startswith(old_prefix):
-                he_path = he_path.replace(old_prefix, base_dir, 1)
+                he_path = he_path.replace(old_prefix, base_root, 1)
 
             missing = []
             if not os.path.exists(image_path):

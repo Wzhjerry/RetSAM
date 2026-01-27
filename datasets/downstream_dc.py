@@ -19,7 +19,7 @@ class Downstream_DC(Dataset):
     """
     OD/OC dataset loader using CSV lists.
     - Outputs 3 classes: 0 background, 1 disc (>0), 2 cup (>250)
-    - CSV location: /workspace/wangzhonghua/fundus_dataset/fundus_miccai/ODOC_seg/<dataset_name>/<split>.csv
+    - CSV location: <csv_base_dir>/ODOC_seg/<dataset_name>/<split>.csv
       Columns: image_path, label_path, optional name/image_name
     """
 
@@ -91,12 +91,12 @@ class Downstream_DC(Dataset):
     def load_name(self, split):
         inputs, targets, names = [], [], []
         dataset_name = getattr(self.args, 'dataset_name', self.args.dataset)
-        base_dir = '/workspace/wangzhonghua/fundus_dataset/fundus_miccai'
+        base_root = getattr(self.args, 'csv_base_dir', '/workspace/wangzhonghua/fundus_dataset/fundus_miccai')
         if split == 'train':
             csv_name = getattr(self.args, 'train_csv_name', 'train.csv')
         else:
             csv_name = f'{split}.csv'
-        csv_path = os.path.join(base_dir, 'ODOC_seg', dataset_name, csv_name)
+        csv_path = os.path.join(base_root, 'ODOC_seg', dataset_name, csv_name)
         if not os.path.exists(csv_path):
             raise FileNotFoundError(f'{split} CSV not found: {csv_path}')
 
@@ -114,9 +114,9 @@ class Downstream_DC(Dataset):
             image_path = str(row['image_path'])
             label_path = str(row['label_path'])
             if image_path.startswith(old_prefix):
-                image_path = image_path.replace(old_prefix, base_dir, 1)
+                image_path = image_path.replace(old_prefix, base_root, 1)
             if label_path.startswith(old_prefix):
-                label_path = label_path.replace(old_prefix, base_dir, 1)
+                label_path = label_path.replace(old_prefix, base_root, 1)
 
             missing = []
             if not os.path.exists(image_path):

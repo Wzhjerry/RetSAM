@@ -26,7 +26,7 @@ Repository Layout
 - `inference_modules/` – model loading, preprocessing, predictor, visualizer, analyzer, disease grading.
 - `models/` – Lightning modules and Swin-based multitask models.
 - `datasets/` – dataset loaders (add your own for finetune).
-- `scripts/` – helper scripts (`inference.sh`, `run.sh`).
+- `scripts/` – helper scripts (`inference.sh`, `train.sh`).
 - `utils/` – training utils, visualization, analysis helpers.
 
 Requirements
@@ -144,10 +144,10 @@ Outputs are saved under `--output_dir` per image. The script recurses over commo
 Fine-tuning
 -----------
 1) Datasets: add/modify a loader under `datasets/` (e.g., `datasets/your_dataset.py`), implement `load_dataset(args, train=True/False)`, and set your local paths, splits, transforms. The `--dataset` argument must match the filename (without `.py`).
-2) Configure training in `scripts/run.sh` (batch size, lr, save paths, checkpoint, etc.).
+2) Configure training in `scripts/train.sh` (batch size, lr, save paths, checkpoint, etc.).
 3) Run:
 ```bash
-bash scripts/run.sh
+bash scripts/train.sh
 ```
 Models/logs are saved under `--save_name`. Fine-tuning is multitask-only; use `swin_multitask` by default (or `swin_multitask_final` if you have that checkpoint).
 - Minimal knobs to edit (multitask only):
@@ -155,6 +155,7 @@ Models/logs are saved under `--save_name`. Fine-tuning is multitask-only; use `s
   - `--save_name`: output dir for checkpoints/logs.
   - `--pretrained`: path to multitask checkpoint.
   - `--train_csv_name`: training list filename (default `train.csv`).
+  - `--csv_base_dir`: base directory for CSV lists and dataset paths.
   - `--dataset_name`: optional explicit dataset folder name.
   - `--model`: `swin_multitask` (default) or `swin_multitask_final`.
   - `--out_channels`: tuple string, default `"(2,3,2,4,6)"`; change length to alter task count, values = classes per task.
