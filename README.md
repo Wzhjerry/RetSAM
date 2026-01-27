@@ -5,9 +5,9 @@
 # RetSAM
 
 <p align="left">
-  <a href="TBD"><img src="https://img.shields.io/badge/arXiv-TBD-red" alt="arXiv"></a>
-  <a href="TBD"><img src="https://img.shields.io/badge/Project-Page-blue" alt="Project Page"></a>
-  <a href="TBD"><img src="https://img.shields.io/badge/Model-TBD-green" alt="Model"></a>
+  <a href="TBD"><img src="https://img.shields.io/badge/arXiv-PDF-red" alt="arXiv"></a>
+  <a href="https://wzhjerry.github.io/RetSAM/"><img src="https://img.shields.io/badge/Project-Page-blue" alt="Project Page"></a>
+  <a href="https://huggingface.co/JerryWzh/RetSAM_public"><img src="https://img.shields.io/badge/Model-RetSAM-green" alt="Model"></a>
 </p>
 
 Overview
