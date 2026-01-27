@@ -1,0 +1,79 @@
+[
+  {
+    "id": "100_4522",
+    "label": "Case 100_4522",
+    "basePath": "sources/samples/100_4522",
+    "metricsUrl": "sources/samples/100_4522/quantitative_analysis.json",
+    "originalImage": "100_4522.jpg"
+  },
+  {
+    "id": "100_4524",
+    "label": "Case 100_4524",
+    "basePath": "sources/samples/100_4524",
+    "metricsUrl": "sources/samples/100_4524/quantitative_analysis.json",
+    "originalImage": "100_4524.png"
+  },
+  {
+    "id": "1297_8701",
+    "label": "Case 1297_8701",
+    "basePath": "sources/samples/1297_8701",
+    "metricsUrl": "sources/samples/1297_8701/quantitative_analysis.json",
+    "originalImage": "1297_8701.jpg"
+  },
+  {
+    "id": "1435_9611",
+    "label": "Case 1435_9611",
+    "basePath": "sources/samples/1435_9611",
+    "metricsUrl": "sources/samples/1435_9611/quantitative_analysis.json",
+    "originalImage": "1435_9611.jpg"
+  },
+  {
+    "id": "1ffa92af-8d87-11e8-9daf-6045cb817f5b.",
+    "label": "Case 1ffa92af-8d87-11e8-9daf-6045cb817f5b.",
+    "basePath": "sources/samples/1ffa92af-8d87-11e8-9daf-6045cb817f5b.",
+    "metricsUrl": "sources/samples/1ffa92af-8d87-11e8-9daf-6045cb817f5b./quantitative_analysis.json",
+    "originalImage": "1ffa92af-8d87-11e8-9daf-6045cb817f5b..JPG"
+  },
+  {
+    "id": "1ffa92ba-8d87-11e8-9daf-6045cb817f5b.",
+    "label": "Case 1ffa92ba-8d87-11e8-9daf-6045cb817f5b.",
+    "basePath": "sources/samples/1ffa92ba-8d87-11e8-9daf-6045cb817f5b.",
+    "metricsUrl": "sources/samples/1ffa92ba-8d87-11e8-9daf-6045cb817f5b./quantitative_analysis.json",
+    "originalImage": "1ffa92ba-8d87-11e8-9daf-6045cb817f5b..JPG"
+  },
+  {
+    "id": "241_4846",
+    "label": "Case 241_4846",
+    "basePath": "sources/samples/241_4846",
+    "metricsUrl": "sources/samples/241_4846/quantitative_analysis.json",
+    "originalImage": "241_4846.jpg"
+  },
+  {
+    "id": "55_right",
+    "label": "Case 55_right",
+    "basePath": "sources/samples/55_right",
+    "metricsUrl": "sources/samples/55_right/quantitative_analysis.json",
+    "originalImage": "55_right.jpg"
+  },
+  {
+    "id": "651_5716",
+    "label": "Case 651_5716",
+    "basePath": "sources/samples/651_5716",
+    "metricsUrl": "sources/samples/651_5716/quantitative_analysis.json",
+    "originalImage": "651_5716.jpg"
+  },
+  {
+    "id": "mmac_task_1_train_0039",
+    "label": "Case mmac_task_1_train_0039",
+    "basePath": "sources/samples/mmac_task_1_train_0039",
+    "metricsUrl": "sources/samples/mmac_task_1_train_0039/quantitative_analysis.json",
+    "originalImage": "mmac_task_1_train_0039.png"
+  },
+  {
+    "id": "mmac_task_1_train_0069",
+    "label": "Case mmac_task_1_train_0069",
+    "basePath": "sources/samples/mmac_task_1_train_0069",
+    "metricsUrl": "sources/samples/mmac_task_1_train_0069/quantitative_analysis.json",
+    "originalImage": "mmac_task_1_train_0069.png"
+  }
+]

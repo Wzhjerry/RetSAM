@@ -1,0 +1,1177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>RetSAM: Retinal Segmentation and Quantification</title>
+    <link rel="icon" type="image/png" href="sources/Logo.png" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="og:title" content="RetSAM" />
+    <meta property="og:description" content="A General Model for Retinal Segmentation and Quantification" />
+    <meta property="og:image" content="sources/Main%20Figure.png" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="RetSAM" />
+    <meta name="twitter:description" content="A General Model for Retinal Segmentation and Quantification" />
+    <meta name="twitter:image" content="sources/Main%20Figure.png" />
+
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,500,600,700|Source+Sans+Pro:400,600,700|Playfair+Display:700i" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Charter, "Times New Roman", serif;
+        color: #0f172a;
+        line-height: 1.7;
+        background: #ffffff;
+      }
+      a {
+        color: #1d4ed8;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .header-wrapper {
+        background: #f7efe4;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 0.5rem;
+      }
+      .header-container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        gap: 2.5rem;
+        color: #000000;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+      }
+      .header-content {
+        flex: 1 1 840px;
+        max-width: 1080px;
+        text-align: left;
+        color: #000000;
+      }
+      .header-content h1 {
+        margin: 0 0 0.5rem;
+        font-family: Charter, "Times New Roman", serif;
+        font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+        font-weight: 700;
+        font-style: italic;
+        color: #000000;
+      }
+      .header-content h2 {
+        margin: 0.3rem 0 1.2rem;
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #000000;
+      }
+      .header-content h2.subtitle {
+        font-size: 2em;
+        font-family: Charter, "Times New Roman", serif;
+      }
+      .header-content strong {
+        color: #000000;
+        font-weight: 600;
+      }
+      .header-content p,
+      .header-content li {
+        text-align: justify;
+      }
+      .authors {
+        text-align: left;
+        font-size: 0.98rem;
+        color: #000000;
+      }
+      .authors a,
+      .authors a * {
+        text-decoration: none;
+        border-bottom: none;
+        color: inherit;
+      }
+      .authors a:hover,
+      .authors a:hover * {
+        color: #1d4ed8;
+        text-decoration: underline;
+      }
+      .affiliations,
+      .notes {
+        margin-top: 0.4rem;
+        font-size: 0.92rem;
+        color: #000000;
+      }
+      .byline {
+        max-width: 1100px;
+        margin: 1.6rem auto 0;
+        padding: 20px 5px 20px;
+        text-align: center;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      .byline .authors,
+      .byline .affiliations,
+      .byline .notes {
+        text-align: center;
+      }
+      .byline .authors {
+        font-size: 1.15rem;
+        line-height: 1.8;
+      }
+      .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.3rem;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.1rem;
+        border-radius: 20px;
+        background: #eedfcf;
+        color: #0f2438;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border: 2px solid rgba(173, 141, 104, 0.5);
+        box-shadow: 0 2px 4px rgba(15, 36, 56, 0.15);
+        transition: all 0.3s ease;
+      }
+      .button:hover {
+        background-color: rgba(224, 205, 183, 0.9);
+        color: #0f2438;
+        border-color: rgba(173, 141, 104, 0.7);
+        box-shadow: 0 4px 8px rgba(15, 36, 56, 0.2);
+        transform: translateY(-1px);
+      }
+      .button.light {
+        background: #eedfcf;
+        color: #0f2438;
+        border: 2px solid rgba(173, 141, 104, 0.5);
+      }
+      .button.model-button {
+        background: #eedfcf;
+        color: #0f2438;
+      }
+      .button .hf-logo {
+        height: 1em;
+        width: auto;
+      }
+      .header-image {
+        flex: 1 1 320px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: stretch;
+      }
+      .header-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        margin: 0;
+        object-fit: contain;
+        image-rendering: -webkit-optimize-contrast;
+        transform: scale(1.05);
+        transform-origin: top center;
+      }
+      .header-hero-image {
+        border-radius: 18px;
+        box-shadow: none;
+        transition: none;
+      }
+      .icon-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 1.4rem;
+      }
+      .icon-item {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0;
+      }
+      .icon-item i {
+        font-size: 1.25rem;
+        color: #000000;
+        margin-top: 2px;
+        opacity: 0.9;
+      }
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 3.5rem;
+        font-family: Charter, "Times New Roman", serif;
+        background: #ffffff;
+      }
+      main p,
+      main li,
+      main h1,
+      main h2,
+      main h3,
+      main h4,
+      main h5,
+      main h6 {
+        font-family: Charter, "Times New Roman", serif;
+      }
+      main p,
+      main li {
+        font-size: 1.2rem;
+        text-align: justify;
+      }
+      @media (min-width: 600px) {
+        .header-container {
+          justify-content: space-between;
+          align-items: center;
+          padding: 50px 50px;
+          text-align: left;
+        }
+        .header-content {
+          max-width: calc(58% - 20px);
+          margin-right: 10px;
+        }
+        .header-content h1 {
+          font-size: 3.3em;
+        }
+        .header-content h2 {
+          margin-top: -0.75em;
+          font-size: 2em;
+        }
+        .header-image {
+          max-width: calc(42% - 20px);
+        }
+        .header-image img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      @media (max-width: 768px) {
+        .header-container {
+          padding: 16px;
+          padding-top: 32px;
+        }
+        .header-content h1 {
+          font-size: 3em;
+          margin-bottom: 0.125em;
+        }
+        .header-content h2 {
+          font-size: 1.7em;
+          white-space: nowrap;
+          margin-top: 0;
+        }
+        .header-content h2.subtitle {
+          font-size: 1.7em;
+        }
+        .header-image {
+          max-width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+      section {
+        margin-bottom: 3rem;
+      }
+      .section-title {
+        font-size: 1.7rem;
+        margin: 0 0 0.8rem;
+        font-weight: 700;
+      }
+      .figure {
+        margin: 2.5rem 0;
+        text-align: center;
+      }
+      .figure img {
+        max-width: 100%;
+        border-radius: 16px;
+        box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+      }
+      .figure figcaption {
+        margin-top: 0.6rem;
+        color: #475569;
+        font-size: 0.95rem;
+        text-align: justify;
+      }
+      .callout {
+        background: #f4f5f7;
+        border-left: 4px solid #0f766e;
+        padding: 1rem 1.2rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+        color: #0f172a;
+      }
+      .key-list {
+        padding-left: 1.2rem;
+        margin: 0.6rem 0 0;
+      }
+      .text-table {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+        padding: 1rem 1.2rem;
+        background: rgba(255, 255, 255, 0.6);
+      }
+      .text-table-row {
+        padding: 0.35rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .text-table-row:last-child {
+        border-bottom: none;
+      }
+      .text-table-grid {
+        width: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.6);
+        border-collapse: separate;
+        border-spacing: 0;
+        overflow: hidden;
+        margin: 1.5rem 0 2rem;
+      }
+      .key-list + .text-table-grid,
+      p + .text-table-grid {
+        margin-top: 1.8rem;
+      }
+      .text-table-grid th,
+      .text-table-grid td {
+        padding: 0.6rem 0.8rem;
+        vertical-align: top;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        border-right: 1px solid rgba(0, 0, 0, 0.06);
+      }
+      .text-table-grid th:last-child,
+      .text-table-grid td:last-child {
+        border-right: none;
+      }
+      .text-table-grid tr:last-child td {
+        border-bottom: none;
+      }
+      .text-table-grid thead th {
+        font-weight: 700;
+        text-align: left;
+        background: rgba(255, 255, 255, 0.7);
+      }
+      .text-table-grid td {
+        text-align: justify;
+      }
+      .text-table-grid tbody th {
+        font-weight: 600;
+        text-align: left;
+      }
+      .grid-two {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.4rem;
+      }
+      pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.2rem;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 0.9rem;
+      }
+      .viz-panel {
+        background: #f8fafc;
+        border: none;
+        border-radius: 18px;
+        padding: 1.2rem;
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+      }
+      .viz-grid {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr) 260px;
+        gap: 1rem;
+        align-items: stretch;
+      }
+      .viz-thumbs {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        max-height: 520px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 0.2rem;
+        min-width: 200px;
+      }
+      .viz-thumb {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: #ffffff;
+        border: none;
+        border-radius: 12px;
+        padding: 0.35rem 0.45rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: left;
+      }
+      .viz-thumb img {
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .viz-thumb span {
+        font-size: 0.92rem;
+        color: #0f172a;
+      }
+      .viz-thumb.active {
+        border-color: #1d4ed8;
+        box-shadow: 0 6px 14px rgba(29, 78, 216, 0.18);
+      }
+      .viz-main {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .viz-main-image {
+        width: 100%;
+        height: 580px;
+        object-fit: contain;
+        background: #ffffff;
+        border-radius: 16px;
+        border: none;
+      }
+      .viz-metrics {
+        background: #ffffff;
+        border-radius: 14px;
+        border: none;
+        padding: 0.8rem 0.9rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        max-height: 580px;
+        overflow-y: auto;
+      }
+      .viz-metrics h3 {
+        margin: 0 0 0.4rem;
+        font-size: 1.05rem;
+      }
+      .viz-metric-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.8rem;
+        border-bottom: 1px dashed #e2e8f0;
+        padding: 0.35rem 0;
+        font-size: 0.95rem;
+      }
+      .viz-metric-item:last-child {
+        border-bottom: none;
+      }
+      .viz-metric-label {
+        color: #475569;
+      }
+      .viz-metric-value {
+        font-weight: 600;
+        color: #0f172a;
+        text-align: right;
+      }
+      .viz-case-strip {
+        display: flex;
+        gap: 0.8rem;
+        margin-top: 1rem;
+        overflow-x: auto;
+        padding-bottom: 0.2rem;
+      }
+      .viz-case-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+        background: #ffffff;
+        border: none;
+        border-radius: 14px;
+        padding: 0.5rem 0.6rem;
+        min-width: 120px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .viz-case-card img {
+        width: 100px;
+        height: 80px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .viz-case-card span {
+        font-size: 0.9rem;
+        color: #0f172a;
+      }
+      .viz-case-card.active {
+        border-color: #1d4ed8;
+        box-shadow: 0 8px 18px rgba(29, 78, 216, 0.18);
+      }
+      @media (max-width: 1100px) {
+        .viz-grid {
+          grid-template-columns: 1fr;
+        }
+        .viz-thumbs {
+          flex-direction: row;
+          flex-wrap: wrap;
+          max-height: none;
+          overflow: visible;
+        }
+        .viz-thumb {
+          flex: 0 0 auto;
+        }
+        .viz-main-image {
+          height: 420px;
+        }
+        .viz-metrics {
+          max-height: none;
+        }
+      }
+      @media (max-width: 680px) {
+        .viz-main-image {
+          height: 320px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header-container">
+        <div class="header-content">
+          <h1>RetSAM</h1>
+          <h2 class="subtitle">A General Model for Retinal Segmentation and Quantification</h2>
+          <div class="icon-container">
+            <div class="icon-item">
+              <i class="fas fa-layer-group"></i>
+              <div><strong>Unified Architecture:</strong> We design a Single-Encoder, Multi-Decoder framework that decouples task learning, effectively resolving optimization conflicts across diverse retinal targets.</div>
+            </div>
+            <div class="icon-item">
+              <i class="fas fa-chart-line"></i>
+              <div><strong>Versatile Segmentation:</strong> We cover a comprehensive taxonomy of anatomical structures, lesions, and phenotypic patterns, achieving state-of-the-art accuracy across 17 public benchmarks and demonstrating robust generalization.</div>
+            </div>
+            <div class="icon-item">
+              <i class="fas fa-stethoscope"></i>
+              <div><strong>Standardized Quantification:</strong> We integrate a modular quantification engine that translates segmentation outputs into 30+ standardized biomarkers (e.g., vessel topology, lesion burden), enabling reproducible clinical measurement.</div>
+            </div>
+            <div class="icon-item">
+              <i class="fas fa-globe"></i>
+              <div><strong>Holistic Benchmarking:</strong> We validate RetSAM through technical benchmarks, oculomics correlations, and clinical trials, demonstrating real-world utility in disease association and diagnostic decision-making.</div>
+            </div>
+          </div>
+
+          <div class="button-container">
+            <a class="button" href="TBD" target="_blank"><i class="fas fa-file-pdf"></i>Paper</a>
+            <a class="button" href="TBD" target="_blank"><i class="ai ai-arxiv"></i>arXiv</a>
+            <a class="button" href="https://github.com/REPLACE_OWNER/RetSAM" target="_blank"><i class="fab fa-github"></i>Code</a>
+            <a class="button model-button" href="TBD" target="_blank">
+              <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" class="hf-logo" />
+              Model
+            </a>
+          </div>
+        </div>
+        <div class="header-image">
+          <img class="header-hero-image" src="sources/Title%20Figure%20v3.png" alt="RetSAM title figure" />
+        </div>
+      </div>
+    </div>
+    <div class="byline">
+      <div class="authors">
+        Zhonghua Wang<sup>1</sup>, Lie Ju<sup>1,2,3</sup>, Sijia Li<sup>1</sup>, Wei Feng<sup>1</sup>,
+        Sijin Zhou<sup>1</sup>, Ming Hu<sup>1</sup>, Siyuan Yan<sup>1</sup>, Jianhao Xiong<sup>5</sup>,
+        Xiaoying Tang<sup>6</sup>, Yifan Peng<sup>7</sup>, Mingquan Lin<sup>8</sup>, Yaodong Ding<sup>9</sup>,
+        Yong Zeng<sup>9</sup>, Wenbin Wei<sup>4</sup>, Li Dong<sup>4</sup>, Zongyuan Ge<sup>1</sup>
+      </div>
+      <div class="affiliations">
+        <sup>1</sup>AIM for Health Lab, Monash University &nbsp; | &nbsp;
+        <sup>2</sup>UCL Institute of Ophthalmology &nbsp; | &nbsp;
+        <sup>3</sup>Moorfields Eye Hospital NHS &nbsp; | &nbsp;
+        <sup>4</sup>Beijing Tongren Hospital
+      </div>
+      <div class="affiliations">
+        <sup>5</sup>Airdoc LLC &nbsp; | &nbsp;
+        <sup>6</sup>Southern University of Science and Technology &nbsp; | &nbsp;
+        <sup>7</sup>Weill Cornell Medicine &nbsp; | &nbsp;
+        <sup>8</sup>University of Minnesota &nbsp; | &nbsp;
+        <sup>9</sup>Beijing Anzhen Hospital
+      </div>
+      <div class="notes">Contacts: zhonghua.wang@monash.edu, zongyuan.ge@monash.edu</div>
+    </div>
+
+    <main>
+      <section id="visualization">
+        <h1 class="section-title">Visualization</h1>
+        <p>
+          Explore the RetSAM outputs on curated samples. Use the left thumbnails to switch between tasks, view the high-resolution
+          overlay in the center, and inspect task-specific quantitative biomarkers on the right. The bottom strip lets you switch
+          between different cases.
+        </p>
+        <div class="viz-panel">
+          <div class="viz-grid">
+            <div class="viz-thumbs" id="viz-task-list"></div>
+            <div class="viz-main">
+              <img class="viz-main-image" id="viz-main-image" src="sources/samples/100_4524/100_4524.png" alt="RetSAM visualization" />
+            </div>
+            <div class="viz-metrics" id="viz-metrics">
+              <h3>Quantitative biomarkers</h3>
+              <div class="viz-metric-item">
+                <span class="viz-metric-label">Status</span>
+                <span class="viz-metric-value">Select a task</span>
+              </div>
+            </div>
+          </div>
+          <div class="viz-case-strip" id="viz-case-strip"></div>
+        </div>
+      </section>
+
+      <section id="overview">
+        <h1 class="section-title">Overview</h1>
+        <p>
+          RetSAM is a unified segmentation-to-quantification framework for fundus imaging that enables large-scale oculomics studies.
+          It supports three task categories across anatomy, phenotypes, and lesions, converting multi-target segmentations into 30+
+          standardized biomarkers. Trained with a multi-stage strategy on private and public data, RetSAM achieves state-of-the-art
+          performance on 17 public datasets and generalizes across populations and devices. These biomarkers support disease
+          correlation analyses and clinical decision-making, with evidence from reader studies and a prospective trial.
+        </p>
+        <figure class="figure">
+          <img src="sources/Main%20Figure.png" alt="RetSAM overview figure" />
+          <figcaption><strong>Figure:</strong> Overview of the RetSAM workflow: unified data curation and clinical integration, task-disease alignment, and joint segmentation-to-quantification that yields 30+ biomarkers validated in reader studies and a prospective trial.</figcaption>
+        </figure>
+      </section>
+
+      <section id="results">
+        <h1 class="section-title">Results</h1>
+        <p>
+          RetSAM generalizes across 17 public benchmarks spanning vessel, OD/OC, and lesion segmentation with strong cross-center and
+          cross-device robustness. It delivers competitive DSC/JAC for vessels while preserving vascular topology, achieving a higher
+          clDice than strong baselines, and reaches near state-of-the-art OD performance with minimal gaps. For OC segmentation, fine-tuned
+          RetSAM leads on most datasets, mitigating annotation-style bias seen in linear inference. In lesion segmentation, RetSAM adapts
+          well across benchmarks, leading on hard/soft exudates in IDRiD and DDR, and improving precision for microaneurysms by reducing
+          over-segmentation. In a multi-task evaluation with fully annotated samples, RetSAM consistently tops competing methods across
+          vessels, OD/OC, and lesions, showing balanced performance without task bias, and delivering sizable gains, especially in vessels.
+        </p>
+        <figure class="figure">
+          <img src="sources/Results%20-%20all%20segmentation.png" alt="All segmentation results" />
+          <figcaption><strong>Figure:</strong> RetSAM provides unified, high-fidelity segmentation across diverse targets, including fine structures (arteries, veins, optic disc/cup), fundus phenotypes (tessellation, arcuate spots, diffuse/patchy atrophy), and lesion categories for DR and AMD, demonstrating strong cross-category generalization.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="sources/Results%20-%20other%20lesions.png" alt="Other lesion results" />
+          <figcaption><strong>Figure:</strong> RetSAM generalizes beyond common DR/AMD findings, segmenting a diverse set of other lesion types and demonstrating robust recognition across challenging clinical appearances. For a full list of supported lesions, please refer to our paper.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="sources/Results%20-%20ood%20lesions.png" alt="OOD lesion results" />
+          <figcaption><strong>Figure:</strong> RetSAM localizes out-of-distribution lesions that were excluded from training by leveraging a generic lesion category; this encourages a broad abnormality representation that separates pathological textures from healthy background.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="sources/Data%20Efficiency.png" alt="Data efficiency results" />
+          <figcaption><strong>Figure:</strong> RetSAM is highly sample-efficient: it surpasses SAM2-UNet with as little as 5% labeled data and maintains a strong performance floor even at 1%, indicating robust transfer from the multitask-pretrained encoder.</figcaption>
+        </figure>
+      </section>
+
+      <section id="segmentation-tasks">
+        <h1 class="section-title">Segmentation Tasks</h1>
+        <p>
+          RetSAM consolidates fragmented retinal segmentation objectives into a unified taxonomy so a single model can segment
+          anatomical structures, lesions, and fundus phenotypes simultaneously. Anatomical structures define the geometric baseline,
+          lesions capture focal pathological changes across major retinopathies, and phenotypes describe chronic background patterns
+          linked to risk profiling. This unified labeling framework supports holistic oculomics analysis despite partial supervision
+          across source datasets.
+        </p>
+        <table class="text-table-grid">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Task</th>
+              <th>Specific</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th rowspan="4">Fundus Biomarkers</th>
+              <th rowspan="2">Vessel</th>
+              <td>Artery</td>
+              <td>Vessels that transport oxygenated blood to the retina; typically lighter in color and narrower than veins.</td>
+            </tr>
+            <tr>
+              <td>Vein</td>
+              <td>Vessels that drain deoxygenated blood; typically darker and wider compared to arteries.</td>
+            </tr>
+            <tr>
+              <th rowspan="2">Optic Nerve</th>
+              <td>Optic Disc</td>
+              <td>The exit point of retinal ganglion cell axons and entry point for blood vessels; corresponds to the physiological blind spot.</td>
+            </tr>
+            <tr>
+              <td>Optic Cup</td>
+              <td>The central depression within the optic disc; its enlargement relative to the disc is a key indicator of glaucoma.</td>
+            </tr>
+
+            <tr>
+              <th rowspan="4">Phenotypes</th>
+              <th>Tessellation</th>
+              <td>Tessellation</td>
+              <td>Appearance of large choroidal vessels visible due to thinning or hypopigmentation of the RPE and retinal pigment.</td>
+            </tr>
+            <tr>
+              <th rowspan="3">Myopic Features</th>
+              <td>Arc Lesion</td>
+              <td>Linear or crescent-shaped lesions representing mechanical breaks in Bruch’s membrane caused by axial elongation.</td>
+            </tr>
+            <tr>
+              <td>Diffuse Atrophy</td>
+              <td>Ill-defined, yellowish lesions indicating partial loss of choroidal tissue and the RPE layer.</td>
+            </tr>
+            <tr>
+              <td>Patchy Atrophy</td>
+              <td>Well-defined, whitish-gray areas representing complete atrophy of the RPE and choriocapillaris.</td>
+            </tr>
+
+            <tr>
+              <th rowspan="10">Lesions</th>
+              <th rowspan="4">DR Lesions</th>
+              <td>Hemorrhage</td>
+              <td>Rupture of blood vessels causing leakage; includes deep or superficial hemorrhages.</td>
+            </tr>
+            <tr>
+              <td>Exudates</td>
+              <td>Lipid and lipoprotein residues leaking from damaged capillaries; appear as bright, reflective yellow spots.</td>
+            </tr>
+            <tr>
+              <td>Cotton-Wool-Spots</td>
+              <td>Fluffy white patches caused by blockage of axoplasmic transport in the nerve fiber layer due to localized ischemia.</td>
+            </tr>
+            <tr>
+              <td>Laser Spot</td>
+              <td>Round atrophic or pigmented scars resulting from panretinal photocoagulation treatment.</td>
+            </tr>
+            <tr>
+              <th rowspan="2">AMD Lesions</th>
+              <td>Drusen</td>
+              <td>Extracellular accumulation of lipids and proteins between the RPE and Bruch’s membrane; a hallmark sign of AMD.</td>
+            </tr>
+            <tr>
+              <td>Patchy Hemorrhage</td>
+              <td>Large areas of subretinal or sub-RPE bleeding, often associated with choroidal neovascularization.</td>
+            </tr>
+            <tr>
+              <th rowspan="4">Other Lesions</th>
+              <td>Epiretinal Membrane</td>
+              <td>Fibrocellular tissue proliferation on the inner retinal surface that can cause macular distortion.</td>
+            </tr>
+            <tr>
+              <td>Macular Hole</td>
+              <td>A full-thickness defect of the retinal tissue involving the anatomic fovea, severely affecting central vision.</td>
+            </tr>
+            <tr>
+              <td>Artifacts</td>
+              <td>Non-pathological noise in the image, such as corneal reflections, eyelash shadows, or dust on the lens.</td>
+            </tr>
+            <tr>
+              <td>Retinal Scar</td>
+              <td>Fibrous tissue formation resulting from prior trauma, inflammation, or healed pathological lesions.</td>
+            </tr>
+            <tr>
+              <th>Possible Lesions</th>
+              <th>Possible Lesions</th>
+              <td>Other Possible Lesions</td>
+              <td>Additional fundus lesions not categorized under the primary DR or AMD tasks due to limited training samples. This class encompasses Edema, Arteriovenous nicking, Venous beading, Vascular sheathing, Pigmentary changes, Fibrous proliferation, Unknown abnormality, Vitreous degeneration, and Choroidal atrophy.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="quantification">
+        <h1 class="section-title">Quantitative Outputs</h1>
+        <p>
+          RetSAM applies a deterministic post-processing pipeline to convert segmentation masks into reproducible clinical
+          biomarkers. Vascular topology is quantified via skeletonization, distance transforms, fractal dimension, and tortuosity
+          within a standard ROI. Optic disc and cup geometry are refined with convex hulls and ISNT-aware orientation. Lesion burden
+          and spatial distribution are computed through connected components and macula-centered quadrant analysis. Together, these
+          steps yield 30 standardized quantitative metrics.
+        </p>
+        <table class="text-table-grid">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Metric / Feature</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th rowspan="4">Retinal Vessels</th>
+              <td>A/V Ratio</td>
+              <td>Mean diameter ratio between arteries and veins.</td>
+            </tr>
+            <tr>
+              <td>CRAE / CRVE</td>
+              <td>Central Retinal Artery/Vein Equivalents (vascular caliber).</td>
+            </tr>
+            <tr>
+              <td>Fractal Dimension</td>
+              <td>Branching complexity index for arteries (FD<sub>a</sub>) and veins (FD<sub>v</sub>).</td>
+            </tr>
+            <tr>
+              <td>Tortuosity</td>
+              <td>Geometrical curvature measure quantifying vessel twist.</td>
+            </tr>
+
+            <tr>
+              <th rowspan="5">Optic Disc, Cup &amp; Macula</th>
+              <td>Cup-to-Disc Ratio</td>
+              <td>Horizontal (CDR) and Vertical (vCDR) diameter ratios.</td>
+            </tr>
+            <tr>
+              <td>ISNT Parameters</td>
+              <td>Neuroretinal rim widths in Inferior, Superior, Nasal, Temporal sectors.</td>
+            </tr>
+            <tr>
+              <td>Orientation</td>
+              <td>Angle of the major axis of the disc/cup relative to the horizontal.</td>
+            </tr>
+            <tr>
+              <td>Macular Center</td>
+              <td>Coordinates of the macula fovea center (pixels).</td>
+            </tr>
+            <tr>
+              <td>Morphometry</td>
+              <td>Pixel area measurements for optic disc and cup.</td>
+            </tr>
+
+            <tr>
+              <th rowspan="3">Tessellation</th>
+              <td>Coverage Ratio</td>
+              <td>Ratio of tessellated fundus area to the total analyzable area.</td>
+            </tr>
+            <tr>
+              <td>Shape Descriptors</td>
+              <td>Mean circularity and aspect ratio describing texture shape.</td>
+            </tr>
+            <tr>
+              <td>Centroid Dispersion</td>
+              <td>Spatial dispersion metric of tessellation component centroids.</td>
+            </tr>
+
+            <tr>
+              <th rowspan="2">Pathological Myopia</th>
+              <td>Atrophy Metrics</td>
+              <td>Count, area, and coverage ratio for Diffuse, Patchy, and Arc atrophy.</td>
+            </tr>
+            <tr>
+              <td>Global Coverage</td>
+              <td>Aggregated coverage ratio of all myopia-related structural changes.</td>
+            </tr>
+
+            <tr>
+              <th rowspan="5">Lesion</th>
+              <td>Lesion Load</td>
+              <td>Total count, pixel area, and coverage ratio per lesion category.</td>
+            </tr>
+            <tr>
+              <td>Size Distribution</td>
+              <td>Counts of lesions stratified by size (Small, Medium, Large).</td>
+            </tr>
+            <tr>
+              <td>Shape Morphology</td>
+              <td>Geometric metrics including Circularity and Aspect Ratio.</td>
+            </tr>
+            <tr>
+              <td>Spatial Localization</td>
+              <td>Lesion counts per macula-centered quadrant.</td>
+            </tr>
+            <tr>
+              <td>Severity Grading</td>
+              <td>Automated severity grading based on lesion coverage ratio.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="method">
+        <h1 class="section-title">Method</h1>
+        <p>We use a three-stage training scheme that balances high-quality expert supervision with the scale of public data.</p>
+        <p><strong>Stage 1: Expert training.</strong> Train separate models for vessel, optic disc, and lesion segmentation on curated private datasets to obtain strong task-specific teachers.</p>
+        <p><strong>Stage 2: Multi-task pre-training.</strong> Use the teachers to generate pseudo-labels on large public corpora and pre-train a unified RetSAM model across tasks.</p>
+        <p><strong>Stage 3: Task adaptation.</strong> Adapt the unified model on private data by freezing the encoder and fine-tuning task heads to match local annotation standards.</p>
+        <p><strong>Note:</strong> Due to data protection policies, the publicly released models may show performance differences from those reported in the paper. If you would like access to the full RetSAM models, please contact us.</p>
+      </section>
+
+      <section id="online-platform">
+        <h1 class="section-title">Online Platform</h1>
+        <p>RetSAM provides an online platform where users can upload their own fundus images for segmentation and quantification testing. The online platform will be updated soon.</p>
+        <figure class="figure">
+          <img src="sources/Online%20platform%201.png" alt="Online platform overview 1" />
+        </figure>
+        <figure class="figure">
+          <img src="sources/Online%20platform%202.png" alt="Online platform overview 2" />
+        </figure>
+      </section>
+
+      <section id="citation">
+        <h1 class="section-title">Citation</h1>
+        <p>ToDo</p>
+      </section>
+    </main>
+
+    <script>
+      const caseIndexUrl = "sources/samples/cases.json";
+      const defaultCases = [
+        {
+          id: "100_4524",
+          label: "Case 100_4524",
+          basePath: "sources/samples/100_4524",
+          metricsUrl: "sources/samples/100_4524/quantitative_analysis.json",
+          originalImage: "100_4524.png"
+        }
+      ];
+      let vizCases = [];
+
+      const buildTasks = (caseItem) => [
+        { id: "original", label: "Original", image: caseItem.originalImage || "combined_predictions.png", metricKey: "overview" },
+        { id: "combined", label: "Overview", image: "combined_predictions.png", metricKey: "overview" },
+        { id: "artery_vein", label: "Artery/Vein", image: "visualizations/artery_vein_overlay.png", metricKey: "vessels" },
+        { id: "od_oc", label: "OD/OC", image: "visualizations/od_oc_overlay.png", metricKey: "optic_disc_cup" },
+        { id: "lesion_dr", label: "DR Lesions", image: "visualizations/lesion_dr_overlay.png", metricKey: "lesion_dr" },
+        { id: "lesion_amd", label: "AMD Lesions", image: "visualizations/lesion_amd_overlay.png", metricKey: "lesion_amd" },
+        { id: "lesion_others", label: "Other Lesions", image: "visualizations/lesion_others_overlay.png", metricKey: "lesion_others" },
+        { id: "possible_lesions", label: "Possible Lesions", image: "visualizations/possible_lesions_overlay.png", metricKey: "possible_lesions" },
+        { id: "tessellation", label: "Tessellation", image: "visualizations/tessellation_overlay.png", metricKey: "tessellation" },
+        { id: "myopia", label: "Myopia", image: "visualizations/myopia_overlay.png", metricKey: "myopia" }
+      ];
+
+      const normalizeCase = (item) => {
+        const id = item.id;
+        const basePath = item.basePath || `sources/samples/${id}`;
+        const resolvedOriginalImage = item.originalImage || `${id}.png`;
+        return {
+          ...item,
+          label: item.label || `Case ${id}`,
+          basePath,
+          metricsUrl: item.metricsUrl || `${basePath}/quantitative_analysis.json`,
+          originalImage: resolvedOriginalImage,
+          tasks: buildTasks({ ...item, basePath, originalImage: resolvedOriginalImage })
+        };
+      };
+
+      const vizState = {
+        caseId: null,
+        taskId: null,
+        metricsCache: {}
+      };
+
+      const taskListEl = document.getElementById("viz-task-list");
+      const caseStripEl = document.getElementById("viz-case-strip");
+      const mainImageEl = document.getElementById("viz-main-image");
+      const metricsEl = document.getElementById("viz-metrics");
+
+      const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
+      const percentFormatter = new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 3 });
+
+      const formatNumber = (value) => (value === null || value === undefined ? "—" : numberFormatter.format(value));
+      const formatPercent = (value) => (value === null || value === undefined ? "—" : percentFormatter.format(value));
+      const formatPixels = (value) => (value === null || value === undefined ? "—" : `${numberFormatter.format(value)} px`);
+
+      const meanValue = (values) => {
+        if (!Array.isArray(values) || values.length === 0) return null;
+        return values.reduce((sum, val) => sum + val, 0) / values.length;
+      };
+
+      const getMetrics = (data, key) => {
+        if (!data || !data.measurements) return [];
+        const measurements = data.measurements;
+
+        if (key === "overview") {
+          return [
+            { label: "Resolution", value: data.meta?.width ? `${data.meta.width} × ${data.meta.height}` : "—" },
+            { label: "Analysis size", value: data.meta?.analysis_resolution ? `${data.meta.analysis_resolution.width} × ${data.meta.analysis_resolution.height}` : "—" },
+            { label: "Schema", value: data.meta?.schema_version || "—" }
+          ];
+        }
+
+        if (key === "vessels") {
+          const vessels = measurements.vessels || {};
+          return [
+            { label: "AV ratio", value: formatNumber(vessels.av_ratio) },
+            { label: "CRAE (mean)", value: formatNumber(meanValue(vessels.CRAE)) },
+            { label: "CRVE (mean)", value: formatNumber(meanValue(vessels.CRVE)) },
+            { label: "FD artery", value: formatNumber(vessels.fractal_dimension?.artery) },
+            { label: "FD vein", value: formatNumber(vessels.fractal_dimension?.vein) },
+            { label: "Tortuosity artery", value: formatNumber(vessels.tortuosity?.artery) },
+            { label: "Tortuosity vein", value: formatNumber(vessels.tortuosity?.vein) },
+            { label: "FG rate", value: formatPercent(vessels.fg_rate) }
+          ];
+        }
+
+        if (key === "optic_disc_cup") {
+          const disc = measurements.optic_disc_cup || {};
+          return [
+            { label: "Cup/disc ratio", value: formatNumber(disc.cup_disc_ratio?.value) },
+            { label: "Vertical C/D", value: formatNumber(disc.vertical_cd_ratio?.value) },
+            { label: "Axis angle", value: disc.axis_angle?.value === undefined ? "—" : `${formatNumber(disc.axis_angle.value)}°` },
+            { label: "Disc area", value: formatPixels(disc.disc_area_px) },
+            { label: "Cup area", value: formatPixels(disc.cup_area_px) },
+            { label: "Eye side", value: disc.eye_side || "—" }
+          ];
+        }
+
+        if (key === "tessellation") {
+          const tessellation = measurements.tessellation || {};
+          return [
+            { label: "Total area", value: formatPixels(tessellation.overall?.total_area_px) },
+            { label: "Coverage", value: formatPercent(tessellation.overall?.coverage_ratio) },
+            { label: "Mean circularity", value: formatNumber(tessellation.shape_stats?.mean_circularity) },
+            { label: "Mean aspect ratio", value: formatNumber(tessellation.shape_stats?.mean_aspect_ratio) },
+            { label: "Centroid dispersion", value: formatNumber(tessellation.centroid_dispersion?.value) }
+          ];
+        }
+
+        if (key === "myopia") {
+          const myopia = measurements.myopia || {};
+          return [
+            { label: "Count", value: formatNumber(myopia.overall?.count) },
+            { label: "Total area", value: formatPixels(myopia.overall?.total_area_px) },
+            { label: "Coverage", value: formatPercent(myopia.overall?.coverage_ratio) },
+            { label: "Arc lesions", value: formatNumber(myopia.categories?.arc_lesion?.count) },
+            { label: "Diffuse atrophy", value: formatNumber(myopia.categories?.diffuse_chorioretinal_atrophy?.count) },
+            { label: "Patchy atrophy", value: formatNumber(myopia.categories?.patchy_chorioretinal_atrophy?.count) }
+          ];
+        }
+
+        const lesionGroup = measurements.lesions?.[key];
+        if (lesionGroup) {
+          return [
+            { label: "Categories", value: formatNumber(lesionGroup.summary?.category_count) },
+            { label: "Total area", value: formatPixels(lesionGroup.summary?.total_area_px) },
+            { label: "Coverage", value: formatPercent(lesionGroup.summary?.coverage_ratio) },
+            { label: "Small lesions", value: formatNumber(lesionGroup.summary?.size_buckets?.small) },
+            { label: "Medium lesions", value: formatNumber(lesionGroup.summary?.size_buckets?.medium) },
+            { label: "Large lesions", value: formatNumber(lesionGroup.summary?.size_buckets?.large) }
+          ];
+        }
+
+        return [];
+      };
+
+      const renderMetrics = (title, items) => {
+        metricsEl.innerHTML = "";
+        const header = document.createElement("h3");
+        header.textContent = title;
+        metricsEl.appendChild(header);
+        if (!items.length) {
+          const empty = document.createElement("div");
+          empty.className = "viz-metric-item";
+          empty.innerHTML = "<span class=\"viz-metric-label\">Status</span><span class=\"viz-metric-value\">No metrics available</span>";
+          metricsEl.appendChild(empty);
+          return;
+        }
+        items.forEach((item) => {
+          const row = document.createElement("div");
+          row.className = "viz-metric-item";
+          row.innerHTML = `<span class="viz-metric-label">${item.label}</span><span class="viz-metric-value">${item.value}</span>`;
+          metricsEl.appendChild(row);
+        });
+      };
+
+      const setActiveButton = (container, id) => {
+        container.querySelectorAll(".active").forEach((el) => el.classList.remove("active"));
+        const next = container.querySelector(`[data-id="${id}"]`);
+        if (next) next.classList.add("active");
+      };
+
+      const setMainImage = (caseItem, task) => {
+        mainImageEl.src = `${caseItem.basePath}/${task.image}`;
+        mainImageEl.alt = `${caseItem.label} - ${task.label}`;
+      };
+
+      const updateMetrics = async (caseItem, task) => {
+        if (!vizState.metricsCache[caseItem.id]) {
+          try {
+            const response = await fetch(caseItem.metricsUrl);
+            vizState.metricsCache[caseItem.id] = await response.json();
+          } catch (error) {
+            vizState.metricsCache[caseItem.id] = null;
+          }
+        }
+        const metrics = getMetrics(vizState.metricsCache[caseItem.id], task.metricKey);
+        renderMetrics("Quantitative biomarkers", metrics);
+      };
+
+      const renderTasks = (caseItem) => {
+        taskListEl.innerHTML = "";
+        if (!caseItem.tasks || !caseItem.tasks.length) return;
+        caseItem.tasks.forEach((task) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "viz-thumb";
+          button.dataset.id = task.id;
+          button.innerHTML = `<img src="${caseItem.basePath}/${task.image}" alt="${task.label} thumbnail"><span>${task.label}</span>`;
+          button.addEventListener("click", () => selectTask(caseItem.id, task.id));
+          taskListEl.appendChild(button);
+        });
+      };
+
+      const renderCases = () => {
+        caseStripEl.innerHTML = "";
+        vizCases.forEach((caseItem) => {
+          const previewImage = caseItem.tasks?.[0]?.image || caseItem.originalImage || "combined_predictions.png";
+          const card = document.createElement("button");
+          card.type = "button";
+          card.className = "viz-case-card";
+          card.dataset.id = caseItem.id;
+          card.innerHTML = `<img src="${caseItem.basePath}/${previewImage}" alt="${caseItem.label} thumbnail">`;
+          card.addEventListener("click", () => selectCase(caseItem.id));
+          caseStripEl.appendChild(card);
+        });
+      };
+
+      const selectCase = (caseId) => {
+        const caseItem = vizCases.find((item) => item.id === caseId);
+        if (!caseItem) return;
+        vizState.caseId = caseId;
+        vizState.taskId = caseItem.tasks?.[0]?.id;
+        renderTasks(caseItem);
+        setActiveButton(caseStripEl, caseId);
+        if (vizState.taskId) {
+          selectTask(caseId, vizState.taskId);
+        }
+      };
+
+      const selectTask = (caseId, taskId) => {
+        const caseItem = vizCases.find((item) => item.id === caseId);
+        if (!caseItem) return;
+        const task = caseItem.tasks.find((item) => item.id === taskId) || caseItem.tasks[0];
+        vizState.taskId = task.id;
+        setMainImage(caseItem, task);
+        setActiveButton(taskListEl, task.id);
+        updateMetrics(caseItem, task);
+      };
+
+      const loadCases = async () => {
+        let cases = defaultCases;
+        try {
+          const response = await fetch(caseIndexUrl);
+          if (response.ok) {
+            const data = await response.json();
+            if (Array.isArray(data) && data.length) {
+              cases = data;
+            }
+          }
+        } catch (error) {
+          cases = defaultCases;
+        }
+        return cases.map(normalizeCase);
+      };
+
+      const initVisualization = async () => {
+        vizCases = await loadCases();
+        if (!vizCases.length) return;
+        renderCases();
+        selectCase(vizCases[0].id);
+      };
+
+      initVisualization();
+    </script>
+  </body>
