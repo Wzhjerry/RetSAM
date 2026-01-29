@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>RetSAM: Retinal Segmentation and Quantification</title>
+    <title>RetSAM</title>
     <link rel="icon" type="image/png" href="sources/Logo.png" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -453,6 +453,43 @@
         max-height: 580px;
         overflow-y: auto;
       }
+      .viz-legend {
+        background: #ffffff;
+        border-radius: 14px;
+        border: none;
+        padding: 0.7rem 0.9rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        height: 140px;
+        overflow-y: auto;
+      }
+      .viz-legend h3 {
+        margin: 0 0 0.2rem;
+        font-size: 1.05rem;
+      }
+      .viz-legend-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.92rem;
+        color: #0f172a;
+      }
+      .viz-legend-swatch {
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+        border: 1px solid rgba(15, 23, 42, 0.2);
+        flex: 0 0 auto;
+      }
+      .viz-legend-group {
+        font-weight: 600;
+        color: #475569;
+        font-size: 0.88rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-top: 0.2rem;
+      }
       .viz-metrics h3 {
         margin: 0 0 0.4rem;
         font-size: 1.05rem;
@@ -546,11 +583,11 @@
           <div class="icon-container">
             <div class="icon-item">
               <i class="fas fa-layer-group"></i>
-              <div><strong>Unified Architecture:</strong> We design a Single-Encoder, Multi-Decoder framework that decouples task learning, effectively resolving optimization conflicts across diverse retinal targets.</div>
+              <div><strong>Unified Architecture:</strong> We design a unified framework that decouples task learning, effectively resolving optimization conflicts across diverse retinal targets.</div>
             </div>
             <div class="icon-item">
               <i class="fas fa-chart-line"></i>
-              <div><strong>Versatile Segmentation:</strong> We cover a comprehensive taxonomy of anatomical structures, lesions, and phenotypic patterns, achieving state-of-the-art accuracy across 17 public benchmarks and demonstrating robust generalization.</div>
+              <div><strong>Versatile Segmentation:</strong> We cover a comprehensive taxonomy of anatomical structures, lesions, and phenotypic patterns, achieving superior performance across 17 public benchmarks and demonstrating robust generalization.</div>
             </div>
             <div class="icon-item">
               <i class="fas fa-stethoscope"></i>
@@ -615,6 +652,13 @@
               <img class="viz-main-image" id="viz-main-image" src="sources/samples/100_4524/100_4524.png" alt="RetSAM visualization" />
             </div>
             <div class="viz-metrics" id="viz-metrics">
+              <div class="viz-legend" id="viz-legend">
+                <h3>Legend</h3>
+                <div class="viz-legend-row">
+                  <span class="viz-legend-swatch" style="background: #e2e8f0;"></span>
+                  <span>Select a task</span>
+                </div>
+              </div>
               <h3>Quantitative biomarkers</h3>
               <div class="viz-metric-item">
                 <span class="viz-metric-label">Status</span>
@@ -966,6 +1010,7 @@
       const caseStripEl = document.getElementById("viz-case-strip");
       const mainImageEl = document.getElementById("viz-main-image");
       const metricsEl = document.getElementById("viz-metrics");
+      const legendEl = document.getElementById("viz-legend");
 
       const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
       const percentFormatter = new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 3 });
@@ -1057,6 +1102,9 @@
 
       const renderMetrics = (title, items) => {
         metricsEl.innerHTML = "";
+        if (legendEl) {
+          metricsEl.appendChild(legendEl);
+        }
         const header = document.createElement("h3");
         header.textContent = title;
         metricsEl.appendChild(header);
@@ -1072,6 +1120,82 @@
           row.className = "viz-metric-item";
           row.innerHTML = `<span class="viz-metric-label">${item.label}</span><span class="viz-metric-value">${item.value}</span>`;
           metricsEl.appendChild(row);
+        });
+      };
+
+      const legendDefinitions = {
+        artery_vein: [
+          { color: "rgb(255, 0, 0)", label: "artery" },
+          { color: "rgb(0, 0, 255)", label: "vein" },
+          { color: "rgb(0, 255, 0)", label: "artery & vein overlap" }
+        ],
+        od_oc: [
+          { color: "rgb(255, 255, 0)", label: "optic_disc" },
+          { color: "rgb(255, 0, 255)", label: "optic_cup" }
+        ],
+        tessellation: [{ color: "rgb(0, 255, 255)", label: "tessellation_region" }],
+        myopia: [
+          { color: "rgb(0, 128, 255)", label: "arc_lesion" },
+          { color: "rgb(138, 43, 226)", label: "diffuse_atrophy" },
+          { color: "rgb(255, 215, 0)", label: "patchy_atrophy" }
+        ],
+        lesion_dr: [
+          { color: "rgb(46, 139, 87)", label: "hemorrhage" },
+          { color: "rgb(128, 0, 128)", label: "exudate" },
+          { color: "rgb(100, 149, 237)", label: "cotton_wool_spot" },
+          { color: "rgb(173, 216, 230)", label: "laser_spot" }
+        ],
+        lesion_amd: [
+          { color: "rgb(173, 216, 230)", label: "drusen" },
+          { color: "rgb(135, 206, 235)", label: "patch_hemorrhage" }
+        ],
+        lesion_others: [
+          { color: "rgb(0, 128, 128)", label: "epiretinal_membrane" },
+          { color: "rgb(148, 0, 211)", label: "artifact" },
+          { color: "rgb(0, 255, 127)", label: "retinal_scar" },
+          { color: "rgb(32, 178, 170)", label: "macular_hole" }
+        ],
+        possible_lesions: [
+          { color: "rgb(255, 255, 255)", label: "other_lesions" },
+          { color: "rgb(64, 224, 208)", label: "myelinated_nerve_fiber" },
+          { color: "rgb(72, 209, 204)", label: "venous_tortuosity" }
+        ]
+      };
+
+      const legendGroups = {
+        lesion_dr: "DR lesions",
+        lesion_amd: "AMD lesions",
+        lesion_others: "Other lesions"
+      };
+
+      const renderLegend = (task) => {
+        legendEl.innerHTML = "";
+        const header = document.createElement("h3");
+        header.textContent = "Legend";
+        legendEl.appendChild(header);
+
+        const entries = legendDefinitions[task?.id] || [];
+        if (!entries.length) {
+          const row = document.createElement("div");
+          row.className = "viz-legend-row";
+          row.innerHTML = "<span class=\"viz-legend-swatch\" style=\"background: #e2e8f0;\"></span><span>No legend available</span>";
+          legendEl.appendChild(row);
+          return;
+        }
+
+        const groupLabel = legendGroups[task.id];
+        if (groupLabel) {
+          const groupEl = document.createElement("div");
+          groupEl.className = "viz-legend-group";
+          groupEl.textContent = groupLabel;
+          legendEl.appendChild(groupEl);
+        }
+
+        entries.forEach((item) => {
+          const row = document.createElement("div");
+          row.className = "viz-legend-row";
+          row.innerHTML = `<span class="viz-legend-swatch" style="background: ${item.color};"></span><span>${item.label}</span>`;
+          legendEl.appendChild(row);
         });
       };
 
@@ -1095,6 +1219,7 @@
             vizState.metricsCache[caseItem.id] = null;
           }
         }
+        renderLegend(task);
         const metrics = getMetrics(vizState.metricsCache[caseItem.id], task.metricKey);
         renderMetrics("Quantitative biomarkers", metrics);
       };
