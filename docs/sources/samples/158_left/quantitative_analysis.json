@@ -1,0 +1,483 @@
+{
+  "meta": {
+    "image_id": "158_left.jpg",
+    "image_path": "/mnt/hdd/sdd/wangzh/datasets/retsam/reader_study_data/2 amd/1 intermidate amd/158_left.jpg",
+    "width": 2129,
+    "height": 2129,
+    "analysis_resolution": {
+      "width": 640,
+      "height": 640,
+      "unit": "pixels"
+    },
+    "generated_at": "2026-01-31T05:45:08.955727Z",
+    "schema_version": "2.1.0"
+  },
+  "measurements": {
+    "vessels": {
+      "av_ratio": 0.8080000281333923,
+      "CRAE": [
+        157.3837432861328,
+        134.8837432861328,
+        147.4224853515625
+      ],
+      "CRVE": [
+        202.26748657226562,
+        157.3837432861328,
+        182.34498596191406
+      ],
+      "fractal_dimension": {
+        "artery": 1.486,
+        "vein": 1.552
+      },
+      "tortuosity": {
+        "artery": 0.07131799310445786,
+        "vein": 0.22605501115322113
+      },
+      "pixel_length": 18.75,
+      "qc_flag": false,
+      "fg_rate": 0.0198
+    },
+    "optic_disc_cup": {
+      "cup_disc_ratio": {
+        "value": 0.3441
+      },
+      "vertical_cd_ratio": {
+        "value": 0.92
+      },
+      "axis_angle": {
+        "value": -31.5,
+        "unit": "deg"
+      },
+      "isnt": {
+        "inferior": 37.0,
+        "superior": 39.0,
+        "nasal": 41.0,
+        "temporal": 16.0
+      },
+      "eye_side": "left",
+      "qc": {
+        "pass": true
+      },
+      "cd_list": [
+        33.0,
+        35.0,
+        90.0,
+        97.0
+      ],
+      "disc_area_px": 7042,
+      "cup_area_px": 980,
+      "disc": {
+        "center": [
+          144.0,
+          272.0
+        ],
+        "radius": 80.0
+      }
+    },
+    "macula": {
+      "center": {
+        "x": 1042.321044921875,
+        "y": 976.2056274414062,
+        "unit": "pixels"
+      },
+      "context": {
+        "eye_side": "left"
+      }
+    },
+    "lesions": {
+      "possible_lesions": {
+        "summary": {
+          "category_count": 2,
+          "total_area_px": 2286,
+          "coverage_ratio": 0.007090460755881578,
+          "size_buckets": {
+            "small": 1,
+            "medium": 0,
+            "large": 2
+          }
+        },
+        "categories": {
+          "other_lesions": {
+            "count": 1,
+            "area_px": 24,
+            "coverage_ratio": 7.44405328701478e-05,
+            "avg_size_px": 24.0,
+            "size_distribution": {
+              "small": 1,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": 1.0,
+              "aspect_ratio": 2.0
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 1,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": "Minimal"
+          },
+          "myelinated_nerve_fiber": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          },
+          "venous_tortuosity": {
+            "count": 2,
+            "area_px": 2262,
+            "coverage_ratio": 0.00701602022301143,
+            "avg_size_px": 1131.0,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 2
+            },
+            "shape": {
+              "circularity": 0.23111239497579406,
+              "aspect_ratio": 6.188036721204089
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 2,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": "Minimal"
+          }
+        }
+      },
+      "lesion_dr": {
+        "summary": {
+          "category_count": 0,
+          "total_area_px": 0,
+          "coverage_ratio": 0.0,
+          "size_buckets": {
+            "small": 0,
+            "medium": 0,
+            "large": 0
+          }
+        },
+        "categories": {
+          "hemorrhage": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          },
+          "exudate": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          },
+          "cotton_wool_spot": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          },
+          "laser_spot": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          }
+        }
+      },
+      "lesion_amd": {
+        "summary": {
+          "category_count": 1,
+          "total_area_px": 34941,
+          "coverage_ratio": 0.10837611079232642,
+          "size_buckets": {
+            "small": 77,
+            "medium": 69,
+            "large": 28
+          }
+        },
+        "categories": {
+          "drusen": {
+            "count": 174,
+            "area_px": 34941,
+            "coverage_ratio": 0.10837611079232642,
+            "avg_size_px": 200.81034482758622,
+            "size_distribution": {
+              "small": 77,
+              "medium": 69,
+              "large": 28
+            },
+            "shape": {
+              "circularity": 0.7768604431292886,
+              "aspect_ratio": 1.5203730827546043
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 174,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": "Severe"
+          },
+          "patch_hemorrhage": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          }
+        }
+      },
+      "lesion_others": {
+        "summary": {
+          "category_count": 0,
+          "total_area_px": 0,
+          "coverage_ratio": 0.0,
+          "size_buckets": {
+            "small": 0,
+            "medium": 0,
+            "large": 0
+          }
+        },
+        "categories": {
+          "epiretinal_membrane": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          },
+          "artifact": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          },
+          "retinal_scar": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          },
+          "macular_hole": {
+            "count": 0,
+            "area_px": 0,
+            "coverage_ratio": 0.0,
+            "avg_size_px": null,
+            "size_distribution": {
+              "small": 0,
+              "medium": 0,
+              "large": 0
+            },
+            "shape": {
+              "circularity": null,
+              "aspect_ratio": null
+            },
+            "quadrant_distribution": {
+              "definition": "macula-centered",
+              "superior_temporal": 0,
+              "superior_nasal": 0,
+              "inferior_temporal": 0,
+              "inferior_nasal": 0
+            },
+            "severity": null
+          }
+        }
+      }
+    },
+    "tessellation": {
+      "overall": {
+        "total_area_px": 84979,
+        "coverage_ratio": 0.2635784184488454
+      },
+      "shape_stats": {
+        "mean_circularity": 0.673963872978289,
+        "mean_aspect_ratio": 2.147776728712856
+      },
+      "centroid_dispersion": {
+        "value": 209.60946788725423,
+        "unit": "pixels"
+      }
+    },
+    "myopia": {
+      "overall": {
+        "count": 1,
+        "total_area_px": 531,
+        "coverage_ratio": 0.00164699678975202
+      },
+      "categories": {
+        "arc_lesion": {
+          "count": 1,
+          "area_px": 531,
+          "coverage_ratio": 0.00164699678975202
+        },
+        "diffuse_chorioretinal_atrophy": {
+          "count": 0,
+          "area_px": 0,
+          "coverage_ratio": 0.0
+        },
+        "patchy_chorioretinal_atrophy": {
+          "count": 0,
+          "area_px": 0,
+          "coverage_ratio": 0.0
+        }
+      }
+    }
+  }
+}

@@ -1,10 +1,24 @@
 [
   {
-    "id": "100_4522",
-    "label": "Case 100_4522",
-    "basePath": "sources/samples/100_4522",
-    "metricsUrl": "sources/samples/100_4522/quantitative_analysis.json",
-    "originalImage": "100_4522.jpg"
+    "id": "1070_12437",
+    "label": "Case 1070_12437",
+    "basePath": "sources/samples/1070_12437",
+    "metricsUrl": "sources/samples/1070_12437/quantitative_analysis.json",
+    "originalImage": "1070_12437.jpg"
+  },
+  {
+    "id": "007-5076-300",
+    "label": "Case 007-5076-300",
+    "basePath": "sources/samples/007-5076-300",
+    "metricsUrl": "sources/samples/007-5076-300/quantitative_analysis.json",
+    "originalImage": "007-5076-300.jpg"
+  },
+  {
+    "id": "007-5349-300",
+    "label": "Case 007-5349-300",
+    "basePath": "sources/samples/007-5349-300",
+    "metricsUrl": "sources/samples/007-5349-300/quantitative_analysis.json",
+    "originalImage": "007-5349-300.jpg"
   },
   {
     "id": "100_4524",
@@ -28,6 +42,13 @@
     "originalImage": "1435_9611.jpg"
   },
   {
+    "id": "158_left",
+    "label": "Case 158_left",
+    "basePath": "sources/samples/158_left",
+    "metricsUrl": "sources/samples/158_left/quantitative_analysis.json",
+    "originalImage": "158_left.jpg"
+  },
+  {
     "id": "1ffa92af-8d87-11e8-9daf-6045cb817f5b.",
     "label": "Case 1ffa92af-8d87-11e8-9daf-6045cb817f5b.",
     "basePath": "sources/samples/1ffa92af-8d87-11e8-9daf-6045cb817f5b.",
@@ -40,6 +61,13 @@
     "basePath": "sources/samples/1ffa92ba-8d87-11e8-9daf-6045cb817f5b.",
     "metricsUrl": "sources/samples/1ffa92ba-8d87-11e8-9daf-6045cb817f5b./quantitative_analysis.json",
     "originalImage": "1ffa92ba-8d87-11e8-9daf-6045cb817f5b..JPG"
+  },
+  {
+    "id": "1ffa9382-8d87-11e8-9daf-6045cb817f5b.",
+    "label": "Case 1ffa9382-8d87-11e8-9daf-6045cb817f5b.",
+    "basePath": "sources/samples/1ffa9382-8d87-11e8-9daf-6045cb817f5b.",
+    "metricsUrl": "sources/samples/1ffa9382-8d87-11e8-9daf-6045cb817f5b./quantitative_analysis.json",
+    "originalImage": "1ffa9382-8d87-11e8-9daf-6045cb817f5b..JPG"
   },
   {
     "id": "241_4846",
