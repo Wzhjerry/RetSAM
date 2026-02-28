@@ -5,7 +5,7 @@
 # RetSAM
 
 <p align="left">
-  <a href="TBD"><img src="https://img.shields.io/badge/arXiv-PDF-red" alt="arXiv"></a>
+  <a href="https://arxiv.org/abs/2602.07012"><img src="https://img.shields.io/badge/arXiv-PDF-red" alt="arXiv"></a>
   <a href="https://wzhjerry.github.io/RetSAM/"><img src="https://img.shields.io/badge/Project-Page-blue" alt="Project Page"></a>
   <a href="https://huggingface.co/JerryWzh/RetSAM_public"><img src="https://img.shields.io/badge/Model-RetSAM-green" alt="Model"></a>
 </p>
@@ -177,4 +177,11 @@ To-do
 
 Citation
 --------
-ToDO
+```bibtex
+@article{wang2026general,
+  title={A General Model for Retinal Segmentation and Quantification},
+  author={Wang, Zhonghua and Ju, Lie and Li, Sijia and Feng, Wei and Zhou, Sijin and Hu, Ming and Xiong, Jianhao and Tang, Xiaoying and Peng, Yifan and Lin, Mingquan and others},
+  journal={arXiv preprint arXiv:2602.07012},
+  year={2026}
+}
+```
