@@ -104,11 +104,11 @@ class Downstream_Lesion(Dataset):
             print(f"=> Warning: zero label mask for {name}")
 
         # Debug
-        import imageio
-        im_np = (im_t.permute(1, 2, 0).numpy() * 0.5 + 0.5) * 255
-        target_np = (target_t.numpy()) * 127
-        imageio.imwrite('/workspace/wangzhonghua/debug/{}.png'.format(name), np.array(im_np).astype(np.uint8))
-        imageio.imwrite('/workspace/wangzhonghua/debug/{}_gt.png'.format(name), np.array(target_np).astype(np.uint8))
+        # import imageio
+        # im_np = (im_t.permute(1, 2, 0).numpy() * 0.5 + 0.5) * 255
+        # target_np = (target_t.numpy()) * 127
+        # imageio.imwrite('/workspace/wangzhonghua/debug/{}.png'.format(name), np.array(im_np).astype(np.uint8))
+        # imageio.imwrite('/workspace/wangzhonghua/debug/{}_gt.png'.format(name), np.array(target_np).astype(np.uint8))
 
         if self.train:
             return im_t, target_t

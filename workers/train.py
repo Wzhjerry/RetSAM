@@ -80,8 +80,6 @@ def train_worker(args):
         #     filename="model_checkpoint_{}".format(str(fold))
         # )
 
-        save_last = True if 'mae' or 'mim' in args.task else False
-
         checkpoint_last = ModelCheckpoint(
             dirpath=save_path,
             filename="model_last_{}".format(str(fold)),
@@ -94,7 +92,7 @@ def train_worker(args):
             devices=args.gpu,
             strategy=DDPStrategy(find_unused_parameters=find),
             logger=args.logger,
-            callbacks=[checkpoint_best, checkpoint_last] if save_last else [checkpoint_best],
+            callbacks=[checkpoint_best, checkpoint_last],
             max_epochs=epoch,
             log_every_n_steps=50
         )
