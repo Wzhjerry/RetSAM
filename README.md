@@ -18,6 +18,8 @@ If you have any questions about RetSAM or this repo, please contact me at: zhong
 
 > **Note (important)**: Due to data policy and privacy constraints, the publicly released models are trained on public datasets and may show performance differences from the models reported in the paper. If you are interested in our work or need access to the full RetSAM models, please contact me.
 
+> **License notice**: This repository is licensed under `PolyForm Noncommercial 1.0.0`. Commercial use is not permitted under this license. If you need commercial licensing, please contact the author.
+
 Repository Layout
 -----------------
 - `main.py` – simple Python API wrapper (`RetSAM`).
@@ -174,6 +176,14 @@ To-do
 - [ ] Add CSV export for quantitative analysis results.
 - [ ] Release RetSAM variants with different parameter scales.
 - [ ] Release higher-resolution RetSAM models.
+
+License
+-------
+This repository is distributed under `PolyForm Noncommercial 1.0.0`.
+
+That license permits personal, educational, academic, research, evaluation, and other non-commercial uses. Commercial use is not permitted under this license.
+
+If you need commercial licensing, please contact: `zhonghua.wang@monash.edu`
 
 Citation
 --------
