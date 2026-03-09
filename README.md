@@ -14,9 +14,9 @@ Overview
 --------
 This is the official repository of "A General Model for Retinal Segmentation and Quantification". 
 
-If you have any questions about RetSAM or this repo, please contact me at: zhonghua.wang@monash.edu
+For questions about RetSAM, this repository, or full-access models, please contact Zhonghua Wang at `zhonghua.wang@monash.edu`.
 
-> **Note (important)**: Due to data policy and privacy constraints, the publicly released models are trained on public datasets and may show performance differences from the models reported in the paper. If you are interested in our work or need access to the full RetSAM models, please contact me.
+> **Note (important)**: Due to data policy and privacy constraints, the publicly released models are trained on public datasets and may show performance differences from the models reported in the paper. For questions about RetSAM, this repository, or full-access models, please contact Zhonghua Wang at `zhonghua.wang@monash.edu`.
 
 Repository Layout
 -----------------
@@ -58,6 +58,7 @@ RetSAM is a multitask retinal segmentation and quantification model that provide
 
 Segmentation Task Setup
 -----------------------
+> **Public release scope**: Due to private-data policy constraints, the public RetSAM release currently provides quantitative outputs for artery/vein, OD/OC, tessellation, myopia, and four lesion categories: hemorrhage, exudate, cotton wool spot, and drusen. If you are interested in the full-access RetSAM models and task set, please contact Zhonghua Wang at `zhonghua.wang@monash.edu`.
 - Anatomical structures: vessels (artery, vein); optic nerve (optic disc, optic cup).
 - Phenotypes: tessellation.
 - Myopic features: peripapillary atrophy, diffuse atrophy, patchy atrophy.
@@ -130,7 +131,7 @@ Outputs are saved under `--output_dir` per image. The script recurses over commo
   - `--input_dir`: input folder (required).
   - `--output_dir`: output folder (required).
   - `--model_path`: checkpoint path (required).
-  - `--output_channels`: tuple string, default `"(2,3,2,4,6)"`; match your checkpoint heads.
+  - `--output_channels`: tuple string, default `"(2,3,2,4,5)"`; match your checkpoint heads.
   - `--has_coordinate_head`: enable coordinate head if your checkpoint includes it.
   - `--num_coordinates`: number of coordinates (e.g., `2` for one point).
   - `--enable_analysis`: write `quantitative_analysis.json`.
@@ -158,7 +159,7 @@ Models/logs are saved under `--save_name`. Fine-tuning is multitask-only; use `s
   - `--csv_base_dir`: base directory for CSV lists and dataset paths.
   - `--dataset_name`: optional explicit dataset folder name.
   - `--model`: `swin_multitask` (default) or `swin_multitask_final`.
-  - `--out_channels`: tuple string, default `"(2,3,2,4,6)"`; change length to alter task count, values = classes per task.
+  - `--out_channels`: tuple string, default `"(2,3,2,4,5)"`; change length to alter task count, values = classes per task.
   - `--size`: input resolution (default `640`).
   - `--gpu`: device ids string. Single GPU: set `'1'`; multi-GPU: set the ids, e.g., `'0,1,2,3'`.
   - `--kfold`: enable 5-fold training.

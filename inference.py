@@ -65,7 +65,7 @@ class FundusInference:
             output_dir: Base directory for saving results (each image gets its own subfolder)
             device: Device to run inference on ('cuda' or 'cpu')
             multitask: Whether to use multitask model
-            output_channels: Output channel configuration (default: (2,3,2,4,6))
+            output_channels: Output channel configuration (default: (2,3,2,4,5))
             enable_disease_classification: Whether to enable disease classification
             disease_types: List of diseases to classify ['dr', 'glaucoma', 'amd', 'myopia', 'cataract'] (if None, classifies all)
             enable_noise_filter: Whether to filter small noise from predictions (default: True)
@@ -541,7 +541,7 @@ def main():
     parser.add_argument('--multitask', action='store_true', default=True,
                        help='Use multitask model')
     parser.add_argument('--output_channels', type=str, default=None,
-                       help='Output channel configuration, e.g., "(2,3,2,4,6)"')
+                       help='Output channel configuration, e.g., "(2,3,2,4,5)"')
     parser.add_argument('--has_coordinate_head', action='store_true',
                        help='Indicate the model includes a coordinate prediction head')
     parser.add_argument('--num_coordinates', type=int, default=None,

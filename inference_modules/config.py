@@ -27,7 +27,6 @@ class InferenceConfig:
                 2: 'exudate', 
                 3: 'cotton_wool_spot', 
                 4: 'drusen',
-                5: 'laser_spot'  # new class for task2 (lesion) 6-channel output
             },
         }
 
@@ -52,17 +51,15 @@ class InferenceConfig:
         }
 
         # Grouped lesion type mappings for final saved outputs
-        # Each group maps to 4-class outputs (0 background, 1..4 meaningful)
+        # Class ids are foreground labels; background remains 0.
         self.grouped_lesion_type_mappings = {
             'lesion_dr': {
                 1: 'hemorrhage',
                 2: 'exudate',
                 3: 'cotton_wool_spot',
-                4: 'laser_spot',
             },
             'lesion_amd': {
                 1: 'drusen',
-                2: 'patch_hemorrhage',
             },
         }
         
@@ -86,7 +83,7 @@ class InferenceConfig:
         self.normalization_std = [0.2767, 0.2024, 0.1686]
         
         # Model settings
-        self.default_output_channels = (2, 3, 2, 4, 6)
+        self.default_output_channels = (2, 3, 2, 4, 5)
         self.model_params = {
             'in_channels': 3,
             'feature_size': 128,

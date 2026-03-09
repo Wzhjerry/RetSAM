@@ -14,7 +14,7 @@ CUDA_VISIBLE_DEVICES=0 python3 run.py \
     --csv_base_dir "/mnt/hdd/sdd/wangzh/datasets/" \
     --train_csv_name "train.csv" \
     --size 640 \
-    --out_channels "(2,3,2,4,6)" \
+    --out_channels "(2,3,2,4,5)" \
     --class_weights "(1, 1, 1, 1, 1)" \
     --patch_size 4 \
     --window_size 10 \

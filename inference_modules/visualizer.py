@@ -302,13 +302,12 @@ class Visualizer:
         lesion_s2_mask = lesion_task_masks.get('lesion_s2')
         lesion_s3_mask = lesion_task_masks.get('lesion_s3')
 
-        # lesion_dr from lesion_s1: channels 1,2,3,5 -> 1..4
+        # lesion_dr from lesion_s1: channels 1,2,3 -> 1..3
         if lesion_s1_mask is not None and 'lesion_dr' in allowed_groups:
             lesion_dr = np.zeros_like(lesion_s1_mask, dtype=np.uint8)
             lesion_dr[lesion_s1_mask == 1] = 1  # hemorrhage
             lesion_dr[lesion_s1_mask == 2] = 2  # exudate
             lesion_dr[lesion_s1_mask == 3] = 3  # cotton wool spot
-            lesion_dr[lesion_s1_mask == 5] = 4  # laser spot
             if save_masks:
                 mask_path = os.path.join(masks_dir, 'lesion_dr_mask.png')
                 cv2.imwrite(mask_path, lesion_dr.astype(np.uint8))
@@ -320,7 +319,7 @@ class Visualizer:
             else:
                 grouped_paths['lesion_dr'] = lesion_dr
 
-        # lesion_amd: s1 ch4 ->1, s2 ch2->2, s2 ch9->3, s3 ch5->4
+        # lesion_amd: s1 ch4 ->1 (drusen only in the public default setup)
         if ((lesion_s1_mask is not None) or (lesion_s3_mask is not None)) and 'lesion_amd' in allowed_groups:
             base = lesion_s1_mask if lesion_s1_mask is not None else lesion_s3_mask
             lesion_amd = np.zeros_like(base, dtype=np.uint8)
@@ -492,16 +491,15 @@ class Visualizer:
                 alpha = self.config.get_overlay_alpha(name)
                 combined = self._add_task_to_combined(combined, mask_int, name, alpha)
 
-        # lesion_dr from lesion_s1: channels 1,2,3,5 -> 1..4
+        # lesion_dr from lesion_s1: channels 1,2,3 -> 1..3
         if lesion_s1_mask is not None:
             lesion_dr = np.zeros_like(lesion_s1_mask, dtype=np.uint8)
             lesion_dr[lesion_s1_mask == 1] = 1  # hemorrhage
             lesion_dr[lesion_s1_mask == 2] = 2  # exudate
             lesion_dr[lesion_s1_mask == 3] = 3  # cotton wool spot
-            lesion_dr[lesion_s1_mask == 5] = 4  # laser spot
             save_group('lesion_dr', lesion_dr)
 
-        # lesion_amd: s1 ch4 ->1, s3 ch5->2 (macular hole moved out)
+        # lesion_amd: s1 ch4 ->1 (drusen only in the public default setup)
         if (lesion_s1_mask is not None) or (lesion_s3_mask is not None):
             base = lesion_s1_mask if lesion_s1_mask is not None else lesion_s3_mask
             lesion_amd = np.zeros_like(base, dtype=np.uint8)

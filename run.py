@@ -79,7 +79,7 @@ def main():
 
     # model specifications
     parser.add_argument("--model", type=str, default="swin_multitask", help="model name (multitask only: swin_multitask or swin_multitask_final)")
-    parser.add_argument("--out_channels", type=str, default="(2,3,2,4,6)", help="output channels")
+    parser.add_argument("--out_channels", type=str, default="(2,3,2,4,5)", help="output channels")
     parser.add_argument("--patch_size", type=int, default=2, help="size of patch")
     parser.add_argument("--window_size", type=int, default=7, help="size of window")
     parser.add_argument("--depths", type=str, default="(2, 2, 2, 2)", help="depth of model")
